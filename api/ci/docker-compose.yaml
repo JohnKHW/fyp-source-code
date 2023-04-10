@@ -1,0 +1,43 @@
+# Useful Commands:
+# docker-compose -p fyp-api -f ci/docker-compose.yaml up -d
+version: '3.9'
+
+services:
+  phpmyadmin-fyp:
+    container_name: phpmyadmin-fyp
+    image: phpmyadmin
+    ports:
+      - 3308:80
+    depends_on:
+      - mariadb-fyp
+    environment:
+      - PMA_HOST=mariadb-fyp
+    networks:
+      - fyp-network
+  mariadb-fyp:
+    container_name: mariadb-fyp
+    image: mariadb:10.2
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=fyp_db
+    ports:
+      - 3306:3306
+    networks:
+      - fyp-network
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  fer-api:
+    image: fer-api:latest
+    container_name: fer-api
+    ports:
+      - 5001:5000
+    volumes:
+      - ../src/storage:/app/storage
+    environment:
+      - FLASK_DEBUG=true
+    networks:
+      - fyp-network
+networks:
+  fyp-network:
+    driver: bridge

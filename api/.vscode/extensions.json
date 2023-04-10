@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "DavidAnson.vscode-markdownlint",
+    "EditorConfig.EditorConfig",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "richie5um2.vscode-sort-json",
+    "timonwong.shellcheck"
+    // "stylelint.vscode-stylelint"
+  ]
+}
